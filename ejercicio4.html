@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Calificación Final</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo-container">
+            <img class="header__logo" src="imagenes/autism.jpg">
+        </div>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li class="header__nav-item"><a href="index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main__ejercicio1">
+        <form class="form__ejercicio1" onsubmit="return calcularCalificacionFinal()">
+            <h1>Calculadora de Calificación Final en Algoritmos</h1>
+            <label> Calificación 1:
+                <input type="text" id="calificacion1" class="form__ejercicio1--input" required oninput="validarInput(this)" maxlength="4">
+            </label>
+            <label> Calificación 2:
+                <input type="text" id="calificacion2" class="form__ejercicio1--input" required oninput="validarInput(this)" maxlength="4">
+            </label>
+            <label> Calificación 3:
+                <input type="text" id="calificacion3" class="form__ejercicio1--input" required oninput="validarInput(this)" maxlength="4">
+            </label>
+            <label> Calificación del examen final:
+                <input type="text" id="examenFinal" class="form__ejercicio1--input" required oninput="validarInput(this)" maxlength="4">
+            </label>
+            <label> Calificación del trabajo final:
+                <input type="text" id="trabajoFinal" class="form__ejercicio1--input" required oninput="validarInput(this)" maxlength="4">
+            </label>
+            <input type="submit" value="Calcular" class="card__button">
+            <p id="resultadoCalificacion"></p>
+        </form>
+    </main>
+    
+    <script>
+        function validarInput(input) {
+            // Reemplaza cualquier carácter que no sea un número o un punto
+            let value = input.value.replace(/[^0-9.]/g, '');
+
+            // Limitar a 10
+            if (value > 10) {
+                value = '10';
+            }
+
+            // Permitir solo un punto decimal y limitar a 3 caracteres después del punto
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            if (parts.length === 2 && parts[1].length > 3) {
+                value = parts[0] + '.' + parts[1].slice(0, 3);
+            }
+
+            input.value = value;
+        }
+    
+        function calcularCalificacionFinal() {
+            const calificacion1 = parseFloat(document.getElementById('calificacion1').value);
+            const calificacion2 = parseFloat(document.getElementById('calificacion2').value);
+            const calificacion3 = parseFloat(document.getElementById('calificacion3').value);
+            const examenFinal = parseFloat(document.getElementById('examenFinal').value);
+            const trabajoFinal = parseFloat(document.getElementById('trabajoFinal').value);
+            
+            // Validar que todas las entradas sean números válidos
+            if (!isNaN(calificacion1) && calificacion1 >= 0 && calificacion1 <= 10 &&
+                !isNaN(calificacion2) && calificacion2 >= 0 && calificacion2 <= 10 &&
+                !isNaN(calificacion3) && calificacion3 >= 0 && calificacion3 <= 10 &&
+                !isNaN(examenFinal) && examenFinal >= 0 && examenFinal <= 10 &&
+                !isNaN(trabajoFinal) && trabajoFinal >= 0 && trabajoFinal <= 10) {
+                
+                // Calcular el promedio de las tres calificaciones parciales
+                const promedioParciales = (calificacion1 + calificacion2 + calificacion3) / 3;
+                
+                // Calcular la calificación final
+                const calificacionFinal = (promedioParciales * 0.55) + (examenFinal * 0.30) + (trabajoFinal * 0.15);
+
+                document.getElementById('resultadoCalificacion').textContent = 
+                    `Calificación final: ${calificacionFinal.toFixed(2)}`;
+                return false; // Para evitar que el formulario se envíe
+            } else {
+                document.getElementById('resultadoCalificacion').textContent = 'Por favor, ingrese números válidos (0 a 10).';
+                return false; // Para evitar que el formulario se envíe
+            }
+        }
+    </script>
+    
+    <footer class="footer">
+        <p class="footer__name">Fernández Rojas Axel Giovanni</p>
+        <h2 class="footer__Title">Todos los Derechos Reservados</h2>
+    </footer>
+</body>
+</html>

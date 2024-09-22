@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Palabras a Números</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo-container">
+            <img class="header__logo" src="imagenes/autism.jpg">
+        </div>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li class="header__nav-item"><a href="index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main__ejercicio1">
+        <form class="form__ejercicio1" onsubmit="return convertirPalabras()">
+            <h1>Conversión de Palabras a Números</h1>
+            <label> Ingrese palabras separadas por comas:
+                <input type="text" id="palabras" class="form__ejercicio1--input" required>
+            </label>
+            <input type="submit" value="Convertir" class="card__button">
+            <p id="resultado"></p>
+        </form>
+    </main>
+    
+    <script>
+        function palabrasANumeros(arr) {
+            const palabrasNumeros = {
+                "cero": 0,
+                "uno": 1,
+                "dos": 2,
+                "tres": 3,
+                "cuatro": 4,
+                "cinco": 5,
+                "seis": 6,
+                "siete": 7,
+                "ocho": 8,
+                "nueve": 9
+            };
+
+            return arr.map(palabra => palabrasNumeros[palabra.toLowerCase()] !== undefined ? palabrasNumeros[palabra.toLowerCase()] : -1);
+        }
+
+        function convertirPalabras() {
+            const input = document.getElementById('palabras').value;
+            const arregloPalabras = input.split(',').map(p => p.trim());
+            const resultadoNumeros = palabrasANumeros(arregloPalabras);
+
+            document.getElementById('resultado').textContent = `Resultado: [${resultadoNumeros.join(', ')}]`;
+            return false; // Para evitar que el formulario se envíe
+        }
+    </script>
+    
+    <footer class="footer">
+        <p class="footer__name">Fernández Rojas Axel Giovanni</p>
+        <h2 class="footer__Title">Todos los Derechos Reservados</h2>
+    </footer>
+</body>
+</html>

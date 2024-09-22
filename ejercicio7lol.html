@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Horas Extras</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo-container">
+            <img class="header__logo" src="imagenes/autism.jpg">
+        </div>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li class="header__nav-item"><a href="index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main__ejercicio1">
+        <form class="form__ejercicio1" onsubmit="return calcularHorasExtras()">
+            <h1>Cálculo de Horas Extras</h1>
+            <label> Horas trabajadas:
+                <input type="number" id="horasTrabajadas" class="form__ejercicio1--input" required min="0">
+            </label>
+            <label> Pago por hora normal:
+                <input type="number" id="pagoPorHora" class="form__ejercicio1--input" required min="0" step="0.01">
+            </label>
+            <input type="submit" value="Calcular" class="card__button">
+            <p id="resultado"></p>
+        </form>
+    </main>
+    
+    <script>
+        function calcularHorasExtras() {
+            const horasTrabajadas = parseFloat(document.getElementById('horasTrabajadas').value);
+            const pagoPorHora = parseFloat(document.getElementById('pagoPorHora').value);
+            let salarioTotal = 0;
+
+            if (horasTrabajadas <= 40) {
+                // Si no hay horas extras
+                salarioTotal = horasTrabajadas * pagoPorHora;
+            } else {
+                // Calcular horas extras
+                const horasExtras = horasTrabajadas - 40;
+                const horasExtrasPagadasAlDoble = Math.min(horasExtras, 8);
+                const horasExtrasPagadasAlTriple = Math.max(horasExtras - 8, 0);
+
+                salarioTotal = (40 * pagoPorHora) + 
+                               (horasExtrasPagadasAlDoble * pagoPorHora * 2) + 
+                               (horasExtrasPagadasAlTriple * pagoPorHora * 3);
+            }
+
+            document.getElementById('resultado').textContent = 
+                `Salario total a recibir: $${salarioTotal.toFixed(2)}`;
+            return false; // Para evitar que el formulario se envíe
+        }
+    </script>
+    
+    <footer class="footer">
+        <p class="footer__name">Fernández Rojas Axel Giovanni</p>
+        <h2 class="footer__Title">Todos los Derechos Reservados</h2>
+    </footer>
+</body>
+</html>

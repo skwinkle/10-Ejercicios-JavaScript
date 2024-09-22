@@ -3,9 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ejercicio 1</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    SOY GAY
+    <header class="header">
+        <div class="header__logo-container">
+            <img class="header__logo" src="imagenes/autism.jpg">
+        </div>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li class="header__nav-item"><a href="index.html">Proyectos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main__ejercicio1">
+        <form class="form__ejercicio1" onsubmit="return calcularGanancia()">
+            <h1>Calculadora de Ganancias por Inversión Mensual</h1>
+            <label> Ingrese la cantidad que va a invertir:
+                <input type="text" id="inversion" class="form__ejercicio1--input" required oninput="validarInput()">
+            </label>
+            <input type="submit" value="Calcular" class="card__button">
+            <p id="muestraInversion"></p>
+        </form>
+    </main>
+    
+    <script>
+        function validarInput() {
+            const input = document.getElementById('inversion');
+            // Reemplaza cualquier carácter que no sea un número o un punto
+            let value = input.value.replace(/[^0-9.]/g, '');
+    
+            // Permitir solo un punto decimal
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+    
+            input.value = value;
+        }
+    
+        function calcularGanancia() {
+            const inversion = parseFloat(document.getElementById('inversion').value);
+            const tasaInteres = 0.02; // 2%
+            
+            if (!isNaN(inversion) && inversion > 0) {
+                const ganancia = inversion * tasaInteres;
+                const total = inversion + ganancia;
+                document.getElementById('muestraInversion').textContent = 
+                    `Cantidad de inversión: $${inversion.toFixed(2)}\nGanancia después de un mes: $${ganancia.toFixed(2)}\nTotal después de un mes: $${total.toFixed(2)}`;
+                return false; // Para evitar que el formulario se envíe
+            } else {
+                document.getElementById('muestraInversion').textContent = 'Por favor, ingrese un número válido.';
+                return false; // Para evitar que el formulario se envíe
+            }
+        }
+    </script>
+     <footer class="footer">
+        <p class="footer__name">Fernández Rojas Axel Giovanni</p> <h2 class="footer__Title">Todos los Derechos Reservados</h2>
+    </footer>
 </body>
 </html>
