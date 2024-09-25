@@ -45,15 +45,14 @@
     
     <script>
         function validarInput(input) {
-            // Reemplaza cualquier carácter que no sea un número o un punto
+
             let value = input.value.replace(/[^0-9.]/g, '');
 
-            // Limitar a 10
+
             if (value > 10) {
                 value = '10';
             }
 
-            // Permitir solo un punto decimal y limitar a 3 caracteres después del punto
             const parts = value.split('.');
             if (parts.length > 2) {
                 value = parts[0] + '.' + parts.slice(1).join('');
@@ -72,25 +71,25 @@
             const examenFinal = parseFloat(document.getElementById('examenFinal').value);
             const trabajoFinal = parseFloat(document.getElementById('trabajoFinal').value);
             
-            // Validar que todas las entradas sean números válidos
+
             if (!isNaN(calificacion1) && calificacion1 >= 0 && calificacion1 <= 10 &&
                 !isNaN(calificacion2) && calificacion2 >= 0 && calificacion2 <= 10 &&
                 !isNaN(calificacion3) && calificacion3 >= 0 && calificacion3 <= 10 &&
                 !isNaN(examenFinal) && examenFinal >= 0 && examenFinal <= 10 &&
                 !isNaN(trabajoFinal) && trabajoFinal >= 0 && trabajoFinal <= 10) {
                 
-                // Calcular el promedio de las tres calificaciones parciales
+                
                 const promedioParciales = (calificacion1 + calificacion2 + calificacion3) / 3;
                 
-                // Calcular la calificación final
+              
                 const calificacionFinal = (promedioParciales * 0.55) + (examenFinal * 0.30) + (trabajoFinal * 0.15);
 
                 document.getElementById('resultadoCalificacion').textContent = 
                     `Calificación final: ${calificacionFinal.toFixed(2)}`;
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             } else {
                 document.getElementById('resultadoCalificacion').textContent = 'Por favor, ingrese números válidos (0 a 10).';
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             }
         }
     </script>

@@ -24,10 +24,10 @@
         <form class="form__ejercicio1" onsubmit="return calcularUtilidad()">
             <h1>Cálculo de Utilidad Anual</h1>
             <label> Salario mensual:
-                <input type="number" id="salarioMensual" class="form__ejercicio1--input" required min="0" step="0.01">
+                <input type="number" id="salarioMensual" class="form__ejercicio1--input" required min="1" step="0.01" onkeydown="bloquearCaracteres(event)">
             </label>
             <label> Antigüedad en la empresa (en años):
-                <input type="number" id="antiguedad" class="form__ejercicio1--input" required min="0">
+                <input type="number" id="antiguedad" class="form__ejercicio1--input" required min="1" step="1" onkeydown="bloquearCaracteres(event)">
             </label>
             <input type="submit" value="Calcular Utilidad" class="card__button">
             <p id="resultadoUtilidad"></p>
@@ -35,30 +35,42 @@
     </main>
     
     <script>
+        function bloquearCaracteres(event) {
+            const caracteresBloqueados = ['-', 'e', '+'];
+
+            if (caracteresBloqueados.includes(event.key)) {
+                event.preventDefault();
+            }
+        }
+
         function calcularUtilidad() {
             const salarioMensual = parseFloat(document.getElementById('salarioMensual').value);
             const antiguedad = parseInt(document.getElementById('antiguedad').value);
             let porcentajeUtilidad = 0;
 
-            // Determinar el porcentaje de utilidad basado en la antigüedad
-            if (antiguedad < 1) {
-                porcentajeUtilidad = 0.05; // 5%
-            } else if (antiguedad < 2) {
-                porcentajeUtilidad = 0.07; // 7%
-            } else if (antiguedad < 5) {
-                porcentajeUtilidad = 0.10; // 10%
-            } else if (antiguedad < 10) {
-                porcentajeUtilidad = 0.15; // 15%
-            } else {
-                porcentajeUtilidad = 0.20; // 20%
+            if (salarioMensual <= 0 || antiguedad <= 0) {
+                document.getElementById('resultadoUtilidad').textContent = "Error: El salario mensual y la antigüedad deben ser mayores que cero.";
+                return false;
             }
 
-            // Calcular la utilidad
+       
+            if (antiguedad < 1) {
+                porcentajeUtilidad = 0.05; 
+            } else if (antiguedad < 2) {
+                porcentajeUtilidad = 0.07;
+            } else if (antiguedad < 5) {
+                porcentajeUtilidad = 0.10;
+            } else if (antiguedad < 10) {
+                porcentajeUtilidad = 0.15;
+            } else {
+                porcentajeUtilidad = 0.20;
+            }
+
             const utilidad = salarioMensual * porcentajeUtilidad;
 
             document.getElementById('resultadoUtilidad').textContent = 
                 `Utilidad anual: $${utilidad.toFixed(2)}`;
-            return false; // Para evitar que el formulario se envíe
+            return false; 
         }
     </script>
     

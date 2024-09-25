@@ -381,3 +381,15 @@ span {
     border-bottom: 2px solid #013f0d;
     background-color: transparent;
 }
+
+.form__textarea {
+    margin: 10px;
+    width: 100%; 
+    height: 100px; 
+    overflow-y: auto; 
+    resize: none; 
+    padding: 10px; 
+    font-size: 16px; 
+    pointer-events: none; 
+    border: 2px solid #013f0d;
+}

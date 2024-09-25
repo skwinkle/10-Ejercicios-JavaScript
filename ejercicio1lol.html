@@ -35,7 +35,7 @@
     <script>
         function validarInput() {
             const input = document.getElementById('inversion');
-            // Reemplaza cualquier carácter que no sea un número o un punto
+
             let value = input.value.replace(/[^0-9.]/g, '');
     
             // Permitir solo un punto decimal
@@ -49,17 +49,17 @@
     
         function calcularGanancia() {
             const inversion = parseFloat(document.getElementById('inversion').value);
-            const tasaInteres = 0.02; // 2%
+            const tasaInteres = 0.02; 
             
             if (!isNaN(inversion) && inversion > 0) {
                 const ganancia = inversion * tasaInteres;
                 const total = inversion + ganancia;
                 document.getElementById('muestraInversion').textContent = 
                     `Cantidad de inversión: $${inversion.toFixed(2)}\nGanancia después de un mes: $${ganancia.toFixed(2)}\nTotal después de un mes: $${total.toFixed(2)}`;
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             } else {
                 document.getElementById('muestraInversion').textContent = 'Por favor, ingrese un número válido.';
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             }
         }
     </script>

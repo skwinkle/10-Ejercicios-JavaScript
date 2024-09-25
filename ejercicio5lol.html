@@ -32,22 +32,30 @@
     </main>
     
     <script>
-        // Establecer la fecha máxima para el input
+  
         document.addEventListener("DOMContentLoaded", function() {
             const hoy = new Date();
-            const fechaMaxima = hoy.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+            hoy.setDate(hoy.getDate() - 1); 
+            const fechaMaxima = hoy.toISOString().split('T')[0]; 
             document.getElementById('fechaNacimiento').setAttribute('max', fechaMaxima);
         });
 
         function calcularEdad() {
             const fechaNacimiento = new Date(document.getElementById('fechaNacimiento').value);
             const hoy = new Date();
+
+   
+            if (fechaNacimiento >= hoy) {
+                document.getElementById('resultadoEdad').textContent = 
+                    'La fecha de nacimiento no puede ser el día de hoy ni una fecha futura.';
+                return false;
+            }
             
             let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
             const mesDif = hoy.getMonth() - fechaNacimiento.getMonth();
             const diaDif = hoy.getDate() - fechaNacimiento.getDate();
 
-            // Ajustar si aún no ha llegado el cumpleaños este año
+
             if (mesDif < 0 || (mesDif === 0 && diaDif < 0)) {
                 edad--;
             }
@@ -57,7 +65,7 @@
 
             if (dias < 0) {
                 meses = (meses === 0) ? 11 : meses - 1;
-                dias = new Date(hoy.getFullYear(), hoy.getMonth(), 0).getDate() + diaDif; // Días del mes anterior
+                dias = new Date(hoy.getFullYear(), hoy.getMonth(), 0).getDate() + diaDif; 
             }
 
             document.getElementById('resultadoEdad').textContent = 

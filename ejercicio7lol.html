@@ -24,10 +24,10 @@
         <form class="form__ejercicio1" onsubmit="return calcularHorasExtras()">
             <h1>Cálculo de Horas Extras</h1>
             <label> Horas trabajadas:
-                <input type="number" id="horasTrabajadas" class="form__ejercicio1--input" required min="0">
+                <input type="number" id="horasTrabajadas" class="form__ejercicio1--input" required min="1" step="1" onkeydown="bloquearCaracteres(event)">
             </label>
             <label> Pago por hora normal:
-                <input type="number" id="pagoPorHora" class="form__ejercicio1--input" required min="0" step="0.01">
+                <input type="number" id="pagoPorHora" class="form__ejercicio1--input" required min="0.01" step="0.01" onkeydown="bloquearCaracteres(event)">
             </label>
             <input type="submit" value="Calcular" class="card__button">
             <p id="resultado"></p>
@@ -35,16 +35,32 @@
     </main>
     
     <script>
+        function bloquearCaracteres(event) {
+
+            const caracteresBloqueados = ['-', 'e', '+'];
+
+            if (caracteresBloqueados.includes(event.key)) {
+                event.preventDefault();
+            }
+        }
+
         function calcularHorasExtras() {
             const horasTrabajadas = parseFloat(document.getElementById('horasTrabajadas').value);
             const pagoPorHora = parseFloat(document.getElementById('pagoPorHora').value);
+
+
+            if (horasTrabajadas <= 0 || pagoPorHora <= 0) {
+                document.getElementById('resultado').textContent = "Error: Las horas trabajadas y el pago por hora deben ser mayores que cero.";
+                return false;
+            }
+
             let salarioTotal = 0;
 
             if (horasTrabajadas <= 40) {
-                // Si no hay horas extras
+
                 salarioTotal = horasTrabajadas * pagoPorHora;
             } else {
-                // Calcular horas extras
+
                 const horasExtras = horasTrabajadas - 40;
                 const horasExtrasPagadasAlDoble = Math.min(horasExtras, 8);
                 const horasExtrasPagadasAlTriple = Math.max(horasExtras - 8, 0);
@@ -56,7 +72,7 @@
 
             document.getElementById('resultado').textContent = 
                 `Salario total a recibir: $${salarioTotal.toFixed(2)}`;
-            return false; // Para evitar que el formulario se envíe
+            return false; 
         }
     </script>
     

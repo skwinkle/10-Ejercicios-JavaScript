@@ -42,10 +42,10 @@
     
     <script>
         function validarInput(input) {
-            // Reemplaza cualquier carácter que no sea un número o un punto
+
             let value = input.value.replace(/[^0-9.]/g, '');
     
-            // Permitir solo un punto decimal
+
             const parts = value.split('.');
             if (parts.length > 2) {
                 value = parts[0] + '.' + parts.slice(1).join('');
@@ -61,22 +61,22 @@
             const venta3 = parseFloat(document.getElementById('venta3').value);
             const comisionPorcentaje = 0.10; // 10%
             
-            // Validar que las entradas sean números válidos
+
             if (!isNaN(sueldoBase) && sueldoBase >= 0 &&
                 !isNaN(venta1) && venta1 >= 0 &&
                 !isNaN(venta2) && venta2 >= 0 &&
                 !isNaN(venta3) && venta3 >= 0) {
                 
-                // Calcular comisiones y total
+
                 const comisionTotal = (venta1 + venta2 + venta3) * comisionPorcentaje;
                 const total = sueldoBase + comisionTotal;
 
                 document.getElementById('muestraComisiones').textContent = 
                     `Comisiones totales: $${comisionTotal.toFixed(2)}\nTotal a recibir en el mes: $${total.toFixed(2)}`;
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             } else {
                 document.getElementById('muestraComisiones').textContent = 'Por favor, ingrese números válidos.';
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             }
         }
     </script>

@@ -24,25 +24,29 @@
         <form class="form__ejercicio1" onsubmit="return validarFormulario()">
             <h1>Formulario de Registro</h1>
             <label> Nombre:
-                <input type="text" id="nombre"class="form__ejercicio1--input" required>
+                <input type="text" id="nombre" class="form__ejercicio1--input" required maxlength="10">
             </label>
             <label> Email:
-                <input type="email" id="email" class="form__ejercicio1--input"required>
+                <input type="email" id="email" class="form__ejercicio1--input" required>
             </label>
             <label> Comentarios:
-                <textarea id="comentarios" class="form__ejercicio1--input" maxlength="50 required"></textarea>
+                <textarea id="comentarios" class="form__ejercicio1--input form__textarea" maxlength="50" required></textarea>
             </label>
             <label> Contraseña:
-                <input type="password" id="password" class="form__ejercicio1--input" required>
+                <input type="password" id="password" class="form__ejercicio1--input" required maxlength="15">
             </label>
             <input type="submit" value="Registrar" class="card__button">
         </form>
     </main>
-    
+
     <script>
-        document.querySelectorAll('.form__registro--input, .form__registro--textarea').forEach(input => {
+
+        document.querySelectorAll('.form__ejercicio1--input, .form__textarea').forEach(input => {
             input.addEventListener('blur', function() {
                 validarCampo(this);
+            });
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/\s+/g, ' ').trim(); 
             });
         });
 
@@ -52,15 +56,24 @@
 
             switch (campo.id) {
                 case 'nombre':
-                    if (!campo.value.trim()) {
+                    if (!/^[A-Za-z\s]+$/.test(campo.value.trim())) { 
+                        mensaje = "El nombre solo puede contener letras y espacios.";
+                        valido = false;
+                    } else if (!campo.value.trim()) {
                         mensaje = "El nombre es obligatorio.";
+                        valido = false;
+                    } else if (campo.value.length > 10) { 
+                        mensaje = "El nombre no puede exceder los 10 caracteres.";
                         valido = false;
                     }
                     break;
                 case 'email':
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(campo.value)) {
-                        mensaje = "Ingrese un email válido.";
+                    if (!emailRegex.test(campo.value) || /[^a-zA-Z0-9@.]/.test(campo.value)) { 
+                        mensaje = "Ingrese un email válido sin caracteres especiales.";
+                        valido = false;
+                    } else if (!campo.value.trim()) {
+                        mensaje = "El email es obligatorio.";
                         valido = false;
                     }
                     break;
@@ -68,12 +81,15 @@
                     if (campo.value.length > 50) {
                         mensaje = "Los comentarios no pueden exceder los 50 caracteres.";
                         valido = false;
+                    } else if (!campo.value.trim()) {
+                        mensaje = "Los comentarios son obligatorios.";
+                        valido = false;
                     }
                     break;
                 case 'password':
-                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+                    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,15}$/; 
                     if (!passwordRegex.test(campo.value)) {
-                        mensaje = "La contraseña debe tener al menos 6 caracteres, incluyendo una letra mayúscula, una minúscula y un dígito.";
+                        mensaje = "La contraseña debe tener entre 6 y 15 caracteres, incluyendo una letra mayúscula, una minúscula y un dígito.";
                         valido = false;
                     }
                     break;
@@ -82,19 +98,20 @@
             if (!valido) {
                 alert(mensaje);
             }
+            return valido; 
         }
 
         function validarFormulario() {
             let campos = [document.getElementById('nombre'), document.getElementById('email'), document.getElementById('comentarios'), document.getElementById('password')];
             for (let campo of campos) {
                 if (!validarCampo(campo)) {
-                    return false; // No enviar si hay campos inválidos
+                    return false; 
                 }
             }
-            return true; // Enviar el formulario si todo es válido
+            return true; 
         }
     </script>
-    
+
     <footer class="footer">
         <p class="footer__name">Fernández Rojas Axel Giovanni</p>
         <h2 class="footer__Title">Todos los Derechos Reservados</h2>

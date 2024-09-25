@@ -33,10 +33,14 @@
     
     <script>
         function validarInput(input) {
-            // Reemplaza cualquier carácter que no sea un número o un punto
             let value = input.value.replace(/[^0-9.]/g, '');
-    
-            // Permitir solo un punto decimal
+
+            if (value === "0") {
+                input.value = '';
+                document.getElementById('muestraDescuento').textContent = 'El valor no puede ser 0.';
+                return;
+            }
+
             const parts = value.split('.');
             if (parts.length > 2) {
                 value = parts[0] + '.' + parts.slice(1).join('');
@@ -47,19 +51,19 @@
     
         function calcularDescuento() {
             const totalCompra = parseFloat(document.getElementById('totalCompra').value);
-            const descuentoPorcentaje = 0.15; // 15%
+            const descuentoPorcentaje = 0.15; 
             
-            // Validar que el total de la compra sea un número válido
-            if (!isNaN(totalCompra) && totalCompra >= 0) {
+  
+            if (!isNaN(totalCompra) && totalCompra > 0) {
                 const descuento = totalCompra * descuentoPorcentaje;
                 const totalFinal = totalCompra - descuento;
 
                 document.getElementById('muestraDescuento').textContent = 
                     `Descuento aplicado: $${descuento.toFixed(2)}\nTotal a pagar: $${totalFinal.toFixed(2)}`;
-                return false; // Para evitar que el formulario se envíe
+                return false; 
             } else {
-                document.getElementById('muestraDescuento').textContent = 'Por favor, ingrese un número válido.';
-                return false; // Para evitar que el formulario se envíe
+                document.getElementById('muestraDescuento').textContent = 'Por favor, ingrese un número válido que no sea 0.';
+                return false;
             }
         }
     </script>
@@ -69,4 +73,4 @@
         <h2 class="footer__Title">Todos los Derechos Reservados</h2>
     </footer>
 </body>
-</html>
+</html> 
